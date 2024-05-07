@@ -36,11 +36,7 @@ const server = http.createServer((request, response) => {
       return response.end();
     });
   }
-  const myServer = http
-    .createServer((request, response) => {
-      response.writeHead(200, { "Content-Type": "text/plain" });
-      response.end("Hello Node!\n");
-    })
-    .listen(8080);
+});
+server.listen(8080, () => {
   console.log("My test server is running on Port 8080!");
 });
