@@ -38,7 +38,7 @@ let topMovies = [
 
 // Get requests
 app.get("/movies", (req, res) => {
-  res.send("Welcome to my favorite movies!");
+  res.send("Welcome to some of my favorite movies!");
 });
 
 app.get("documentation", (req, res) => {
