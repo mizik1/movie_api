@@ -3,6 +3,8 @@ const { title } = require("process");
 
 const app = express();
 
+app.use(morgan("common"));
+
 let topMovies = [
   {
     title: "Scarface",
@@ -55,6 +57,12 @@ app.get("/movies", (req, res) => {
 // second get request at "/" (the root level)
 app.get("/", (req, res) => {
   res.send("Welcome to the movie_api project");
+});
+
+// error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
 });
 
 // Listen method, this starts a server listening for connection on port 8080
