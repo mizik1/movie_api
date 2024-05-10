@@ -49,7 +49,7 @@ app.get("documentation", (req, res) => {
 
 // first get request
 app.get("/movies", (req, res) => {
-  res.json(topMovies);
+  res.send(topMovies);
 });
 
 // second get request at "/" (the root level)
