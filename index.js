@@ -47,6 +47,17 @@ app.get("documentation", (req, res) => {
   });
 });
 
+// first get request
 app.get("/movies", (req, res) => {
   res.json(topMovies);
+});
+
+// second get request at "/" (the root level)
+app.get("/", (req, res) => {
+  res.send("Welcome to the movie_api project");
+});
+
+// Listen method, this starts a server listening for connection on port 8080
+app.listen(8080, () => {
+  console.log("Your app is running on port 8080.");
 });
