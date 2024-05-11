@@ -1,9 +1,11 @@
 const express = require("express");
 const { title } = require("process");
+const morgan = require("morgan");
 
 const app = express();
 
 app.use(morgan("common"));
+app.use(express.static("public"));
 
 let topMovies = [
   {
@@ -37,17 +39,6 @@ let topMovies = [
     title: "The Harder They Come",
   },
 ];
-
-// Get requests
-app.get("/movies", (req, res) => {
-  res.send("Welcome to some of my favorite movies!");
-});
-
-app.get("documentation", (req, res) => {
-  res.sendFile("public/documentation.html", {
-    root: __dirname,
-  });
-});
 
 // first get request
 app.get("/movies", (req, res) => {
