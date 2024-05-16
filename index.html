@@ -4,7 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IndexPage</title>
-    <p>This an index file! Yay!</p>
+    <h1>Welcome to My Movie App!</h1>
+    <link rel="stylesheet" href="./CSS/styles.css" />
   </head>
-  <body></body>
+  <body>
+    <table>
+      <tr>
+        <th>REQUEST</th>
+        <th>ENDPOINT URL</th>
+        <th>METHOD TYPE</th>
+        <th>FORMAT OF REQUEST DATA</th>
+        <th>FORMAT OF RESPONSE DATA</th>
+      </tr>
+      <tr>
+        <td>Return a list of ALL movies to the user.</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>A JSON object holding data for all movies.</td>
+      </tr>
+      <tr>
+        <td>Return data about a single movie by title.</td>
+        <td>/movies/title</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          A JSON object holding data about the requested movie. <br />Example: "title":Scarface <br />
+          Endpoint: movies/title/Scarface
+        </td>
+      </tr>
+      <tr>
+        <td>Return data about a movie genre.</td>
+        <td>movies/genre</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          A JSON object holding data about the requested genre. <br />
+          Example: "genre":Comedy <br />
+          Endpoint: movies/genre/Comedy
+        </td>
+      </tr>
+      <tr>
+        <td>Return data about a director.</td>
+        <td>movies/director</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          A JSON object holding data about the requested director <br />
+          Example: "director":John Carpenter <br />
+          Endpoint: movies/director/John Carpenter
+        </td>
+      </tr>
+    </table>
+  </body>
 </html>
