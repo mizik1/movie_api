@@ -2,11 +2,16 @@ const express = require("express");
 const { title } = require("process");
 const morgan = require("morgan");
 const { deserialize } = require("v8");
+const bodyParser = require("body-parser");
 
 const app = express();
 
 app.use(morgan("common"));
 app.use(express.static("public"));
+
+app.use(bodyParser.json());
+
+let users = [];
 
 const movies = [
   {
@@ -127,12 +132,12 @@ const movies = [
   },
 ];
 
-// READ - Return all movies
+// READ (GET) - Return all movies
 app.get("/movies", (req, res) => {
   res.status(200).json(movies);
 });
 
-// READ - Return a specific movie by title
+// READ (GET) - Return a specific movie by title
 app.get("/movies/title/:title", (req, res) => {
   const { title } = req.params;
   const movie = movies.find((movie) => movie.Title === title);
@@ -144,11 +149,10 @@ app.get("/movies/title/:title", (req, res) => {
   }
 });
 
-// READ - Return any movie that matches the genre entered (Comedy, Drama, Suspense, etc.)
+// READ (GET)- Return any movie that matches the genre entered (Comedy, Drama, Suspense, etc.)
 app.get("/movies/genre/:genre", (req, res) => {
   const { genre } = req.params;
   const movie = movies.filter((movie) => movie.Genre === genre);
-
   if (movie) {
     res.status(200).json(movie);
   } else {
@@ -156,7 +160,7 @@ app.get("/movies/genre/:genre", (req, res) => {
   }
 });
 
-// READ - Return the director's name
+// READ (GET)- Return the director's name
 app.get("/movies/director/:director", (req, res) => {
   const { director } = req.params;
   const directors = movies.filter((movie) => movie.Director.Name === director);
@@ -168,7 +172,17 @@ app.get("/movies/director/:director", (req, res) => {
   }
 });
 
-// READ - Return director's name and bio
+// CREATE (POST)- Create a new user
+app.post("/users", (req, res) => {
+  const newUser = req.body;
+  if (newUser.name) {
+    newUser.id = uuid.v4();
+    users.push(newUser);
+    res.status(201).json(newUser);
+  } else {
+    res.status(400).send("users needs name");
+  }
+});
 
 // get request/response
 app.get("/movies", (req, res) => {
