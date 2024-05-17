@@ -19,14 +19,14 @@
       <tr>
         <td>Return a list of ALL movies to the user.</td>
         <td>/movies</td>
-        <td>GET</td>
+        <td>GET - READ</td>
         <td>None</td>
         <td>A JSON object holding data for all movies.</td>
       </tr>
       <tr>
         <td>Return data about a single movie by title.</td>
         <td>/movies/title</td>
-        <td>GET</td>
+        <td>GET - READ</td>
         <td>None</td>
         <td>
           A JSON object holding data about the requested movie. <br />Example: "title":Scarface <br />
@@ -36,7 +36,7 @@
       <tr>
         <td>Return data about a movie genre.</td>
         <td>movies/genre</td>
-        <td>GET</td>
+        <td>GET - READ</td>
         <td>None</td>
         <td>
           A JSON object holding data about the requested genre. <br />
@@ -47,7 +47,7 @@
       <tr>
         <td>Return data about a director.</td>
         <td>movies/director</td>
-        <td>GET</td>
+        <td>GET - READ</td>
         <td>None</td>
         <td>
           A JSON object holding data about the requested director. <br />
@@ -102,7 +102,7 @@
       <tr>
         <td>Let user update their information.</td>
         <td>?</td>
-        <td>POST</td>
+        <td>POST - UPDATE</td>
         <td>None</td>
         <td>
           A JSON object to update user's information.<br />
