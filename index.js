@@ -185,23 +185,24 @@ app.post("/users", (req, res) => {
   }
 });
 
-// get request/response
-app.get("/movies", (req, res) => {
-  res.send(topMovies);
-});
-
-// get request at "/" (the root level)
-app.get("/", (req, res) => {
-  res.send("Welcome to the movie_api project");
-});
-
-// error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
-});
-
 // Listen method, this starts a server listening for connection on port 8080
 app.listen(8080, () => {
   console.log("Your app is running on port 8080.");
 });
+
+// Old code
+// get request/response
+// app.get("/movies", (req, res) => {
+//   res.send(topMovies);
+// });
+
+// get request at "/" (the root level)
+// app.get("/", (req, res) => {
+//   res.send("Welcome to the movie_api project");
+// });
+
+// error handling middleware
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).send("Something broke!");
+// });
