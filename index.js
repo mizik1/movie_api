@@ -3,6 +3,7 @@ const { title } = require("process");
 const morgan = require("morgan");
 const { deserialize } = require("v8");
 const bodyParser = require("body-parser");
+const uuid = require("uuid");
 
 const app = express();
 
@@ -163,10 +164,10 @@ app.get("/movies/genre/:genre", (req, res) => {
 // READ (GET)- Return the director's name
 app.get("/movies/director/:director", (req, res) => {
   const { director } = req.params;
-  const directors = movies.filter((movie) => movie.Director.Name === director);
+  const movie = movies.find((movie) => movie.Director.Name === director);
 
-  if (directors) {
-    res.status(200).json(directors);
+  if (movie) {
+    res.status(200).json(movie.Director);
   } else {
     res.status(400).send("No such director");
   }
