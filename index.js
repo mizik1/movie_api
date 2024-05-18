@@ -25,6 +25,7 @@ const movies = [
       BirthDate: "September 11, 1940",
       DeathDate: "NA",
     },
+    imageURL: "https://upload.wikimedia.org/wikipedia/en/7/71/Scarface_-_1983_film.jpg",
   },
   {
     Title: "Good Will Hunting",
@@ -37,6 +38,7 @@ const movies = [
       BirthDate: "July 24, 1952",
       DeathDate: "NA",
     },
+    imageURL: "https://upload.wikimedia.org/wikipedia/en/5/52/Good_Will_Hunting.png",
   },
   {
     Title: "Boiler Room",
@@ -49,6 +51,7 @@ const movies = [
       BirthDate: "October 7, 1972",
       DeathDate: "NA",
     },
+    imageURL: "https://upload.wikimedia.org/wikipedia/en/5/5c/Boiler_room_ver3.jpg",
   },
   {
     Title: "Zoolander",
@@ -60,6 +63,7 @@ const movies = [
       BirthDate: "November, 30, 1965",
       DeathDate: "NA",
     },
+    imageURL: "https://upload.wikimedia.org/wikipedia/en/7/7c/Movie_poster_zoolander.jpg",
   },
   {
     Title: "Star Wars Episode IV",
@@ -72,6 +76,7 @@ const movies = [
       BirthDate: "May 14, 1944",
       DeathDate: "NA",
     },
+    imageURL: "https://upload.wikimedia.org/wikipedia/en/8/87/StarWarsMoviePoster1977.jpg",
   },
   {
     Title: "Lost in Translation",
@@ -83,6 +88,7 @@ const movies = [
       BirthDate: "May 14, 1971",
       DeathDate: "NA",
     },
+    imageURL: "https://upload.wikimedia.org/wikipedia/en/4/4c/Lost_in_Translation_poster.jpg",
   },
   {
     Title: "Planes, Trains, and Automobiles",
@@ -95,6 +101,7 @@ const movies = [
       BirthDate: "February 18, 1950",
       DeathDate: "August 6, 2009",
     },
+    imageURL: "https://upload.wikimedia.org/wikipedia/en/d/d6/Planes_trains_and_automobiles.jpg",
   },
   {
     Title: "Forrest Gump",
@@ -107,6 +114,7 @@ const movies = [
       BirthDate: "May 14, 1952",
       DeathDate: "NA",
     },
+    imageURL: "https://upload.wikimedia.org/wikipedia/en/6/67/Forrest_Gump_poster.jpg",
   },
   {
     Title: "The Thing",
@@ -118,6 +126,7 @@ const movies = [
       BirthDate: "January 16, 1948",
       DeathDate: "NA",
     },
+    imageURL: "https://upload.wikimedia.org/wikipedia/en/e/e3/The_Thing_%281982_film%29.png",
   },
   {
     Title: "My Cousin Vinny",
@@ -130,6 +139,7 @@ const movies = [
       BirthDate: "April 3, 1943",
       DeathDate: "NA",
     },
+    imageURL: "https://upload.wikimedia.org/wikipedia/en/7/76/My-Cousin-Vinny-Poster.jpg",
   },
 ];
 

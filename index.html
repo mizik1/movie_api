@@ -18,14 +18,14 @@
       </tr>
       <tr>
         <td>Return a list of ALL movies to the user.</td>
-        <td>/movies</td>
+        <td>app.get("/movies")</td>
         <td>GET - READ</td>
         <td>None</td>
         <td>A JSON object holding data for all movies.</td>
       </tr>
       <tr>
         <td>Return data about a single movie by title.</td>
-        <td>/movies/title</td>
+        <td>app.get("/movies/title")</td>
         <td>GET - READ</td>
         <td>None</td>
         <td>
@@ -35,7 +35,7 @@
       </tr>
       <tr>
         <td>Return data about a movie genre.</td>
-        <td>movies/genre</td>
+        <td>app.get("movies/genre")</td>
         <td>GET - READ</td>
         <td>None</td>
         <td>
@@ -46,7 +46,7 @@
       </tr>
       <tr>
         <td>Return data about a director.</td>
-        <td>movies/director</td>
+        <td>app.get("movies/director")</td>
         <td>GET - READ</td>
         <td>None</td>
         <td>
@@ -55,59 +55,60 @@
           Endpoint: movies/director/John Carpenter
         </td>
       </tr>
-      <tr>
-        <td>Let new user create new user ID.</td>
-        <td>?</td>
-        <td>POST</td>
-        <td>None</td>
-        <td>
-          A JSON object with new user data.<br />
-          Example: "new user": Mary Adams <br />
-          Endpoint: ??
-        </td>
-      </tr>
-      <tr>
-        <td>Let user delete user ID.</td>
-        <td>?</td>
-        <td>POST</td>
-        <td>None</td>
-        <td>
-          ?<br />
-          Example: ? <br />
-          Endpoint: ?
-        </td>
-      </tr>
+
       <tr>
         <td>Let user add new movie.</td>
-        <td>?</td>
+        <td>app.post("/users/favorites/:movieId")</td>
         <td>POST</td>
         <td>None</td>
         <td>
           A JSON object to add user's favorite movie.<br />
-          Example: ? <br />
-          Endpoint: ?
+          Example: "id": "Shrek"<br />
+          Endpoint: ("/users/favorites/Shrek")
         </td>
       </tr>
       <tr>
         <td>Let user remove a movie they previously entered.</td>
-        <td>?</td>
-        <td>POST</td>
+        <td>app.delete("/users/favorites/:movieId")</td>
+        <td>DELETE</td>
         <td>None</td>
         <td>
-          A JSON object to remove movie that was previously enetered.<br />
-          Example: ?<br />
-          Endpoint: ?
+          A JSON object to remove movie that was previously entered.<br />
+          Example: "id": "Shrek"<br />
+          Endpoint: ("/users/favorites/Shrek")
+        </td>
+      </tr>
+      <tr>
+        <td>Let new user create user ID.</td>
+        <td>app.put("/users/id")</td>
+        <td>PUT</td>
+        <td>None</td>
+        <td>
+          A JSON object with new user data.<br />
+          Example: "id": "MaryAdams, "email": "mary@gmail.com"<br />
+          Endpoint: ("/users/id")
+        </td>
+      </tr>
+      <tr>
+        <td>Let user delete user ID.</td>
+        <td>app.put("/users/id")</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>
+          A JSON object to delete user data.<br />
+          Example: "id": "MaryAdams", "email": "mary@gmail.com"/ <br />
+          Endpoint: ("/users/id")
         </td>
       </tr>
       <tr>
         <td>Let user update their information.</td>
-        <td>?</td>
+        <td>app.put("/users/id")</td>
         <td>POST - UPDATE</td>
         <td>None</td>
         <td>
           A JSON object to update user's information.<br />
           Example: user:"Mary Adams" changes last name to "Mary Jones" <br />
-          Endpoint: ?
+          Endpoint: ("/users/id")
         </td>
       </tr>
     </table>
