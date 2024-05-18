@@ -195,6 +195,27 @@ app.post("/users", (req, res) => {
   }
 });
 
+// CREATE (POST) - Add a new movie
+app.post("/movies", (req, res) => {
+  const newMovie = req.body;
+
+  if (
+    newMovie.Title &&
+    newMovie.Description &&
+    newMovie.Genre &&
+    newMovie.Director &&
+    newMovie.Director.Name &&
+    newMovie.Director.Bio &&
+    newMovie.Director.BirthDate &&
+    newMovie.imageURL
+  ) {
+    movies.push(newMovie);
+    res.status(201).json(newMovie);
+  } else {
+    res.status(400).send("Missing required movie details");
+  }
+});
+
 // Listen method, this starts a server listening for connection on port 8080
 app.listen(8080, () => {
   console.log("Your app is running on port 8080.");
