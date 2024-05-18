@@ -58,7 +58,7 @@
 
       <tr>
         <td>Let user add new movie.</td>
-        <td>app.post("/users/favorites/:movieId")</td>
+        <td>app.post("/users/favorites/movieId")</td>
         <td>POST</td>
         <td>None</td>
         <td>
@@ -68,8 +68,8 @@
         </td>
       </tr>
       <tr>
-        <td>Let user remove a movie they previously entered.</td>
-        <td>app.delete("/users/favorites/:movieId")</td>
+        <td>Let user delete a movie they previously entered.</td>
+        <td>app.delete("/users/favorites/movieId")</td>
         <td>DELETE</td>
         <td>None</td>
         <td>
@@ -86,29 +86,29 @@
         <td>
           A JSON object with new user data.<br />
           Example: "id": "MaryAdams, "email": "mary@gmail.com"<br />
-          Endpoint: ("/users/id")
+          Endpoint: ("/users/MaryAdams")
         </td>
       </tr>
       <tr>
         <td>Let user delete user ID.</td>
-        <td>app.put("/users/id")</td>
+        <td>app.delete("/users/id")</td>
         <td>DELETE</td>
         <td>None</td>
         <td>
           A JSON object to delete user data.<br />
           Example: "id": "MaryAdams", "email": "mary@gmail.com"/ <br />
-          Endpoint: ("/users/id")
+          Endpoint: ("/users/MaryAdams")
         </td>
       </tr>
       <tr>
         <td>Let user update their information.</td>
         <td>app.put("/users/id")</td>
-        <td>POST - UPDATE</td>
+        <td>PUT</td>
         <td>None</td>
         <td>
           A JSON object to update user's information.<br />
-          Example: user:"Mary Adams" changes last name to "Mary Jones" <br />
-          Endpoint: ("/users/id")
+          Example: "id": "Mary Adams" changes last name to "Mary Jones" <br />
+          Endpoint: ("/users/MaryJones")
         </td>
       </tr>
     </table>
