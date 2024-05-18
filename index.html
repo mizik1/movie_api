@@ -19,14 +19,14 @@
       <tr>
         <td>Return a list of ALL movies to the user.</td>
         <td>app.get("/movies")</td>
-        <td>GET - READ</td>
+        <td>GET</td>
         <td>None</td>
         <td>A JSON object holding data for all movies.</td>
       </tr>
       <tr>
         <td>Return data about a single movie by title.</td>
         <td>app.get("/movies/title")</td>
-        <td>GET - READ</td>
+        <td>GET</td>
         <td>None</td>
         <td>
           A JSON object holding data about the requested movie. <br />Example: "title":Scarface <br />
@@ -36,7 +36,7 @@
       <tr>
         <td>Return data about a movie genre.</td>
         <td>app.get("movies/genre")</td>
-        <td>GET - READ</td>
+        <td>GET</td>
         <td>None</td>
         <td>
           A JSON object holding data about the requested genre. <br />
@@ -47,7 +47,7 @@
       <tr>
         <td>Return data about a director.</td>
         <td>app.get("movies/director")</td>
-        <td>GET - READ</td>
+        <td>GET</td>
         <td>None</td>
         <td>
           A JSON object holding data about the requested director. <br />
@@ -63,7 +63,7 @@
         <td>None</td>
         <td>
           A JSON object to add user's favorite movie.<br />
-          Example: "id": "Shrek"<br />
+          Example: "Id": "Shrek"<br />
           Endpoint: ("/users/favorites/Shrek")
         </td>
       </tr>
@@ -74,40 +74,40 @@
         <td>None</td>
         <td>
           A JSON object to remove movie that was previously entered.<br />
-          Example: "id": "Shrek"<br />
+          Example: "Id": "Shrek"<br />
           Endpoint: ("/users/favorites/Shrek")
         </td>
       </tr>
       <tr>
         <td>Let new user create user ID.</td>
-        <td>app.put("/users/id")</td>
+        <td>app.put("/users/Id")</td>
         <td>PUT</td>
         <td>None</td>
         <td>
           A JSON object with new user data.<br />
-          Example: "id": "MaryAdams, "email": "mary@gmail.com"<br />
+          Example: "Id": "MaryAdams, "email": "mary@gmail.com"<br />
           Endpoint: ("/users/MaryAdams")
         </td>
       </tr>
       <tr>
         <td>Let user delete user ID.</td>
-        <td>app.delete("/users/id")</td>
+        <td>app.delete("/users/Id")</td>
         <td>DELETE</td>
         <td>None</td>
         <td>
           A JSON object to delete user data.<br />
-          Example: "id": "MaryAdams", "email": "mary@gmail.com"/ <br />
+          Example: "Id": "MaryAdams", "email": "mary@gmail.com"/ <br />
           Endpoint: ("/users/MaryAdams")
         </td>
       </tr>
       <tr>
         <td>Let user update their information.</td>
-        <td>app.put("/users/id")</td>
+        <td>app.put("/users/Id")</td>
         <td>PUT</td>
         <td>None</td>
         <td>
           A JSON object to update user's information.<br />
-          Example: "id": "Mary Adams" changes last name to "Mary Jones" <br />
+          Example: "Id": "Mary Adams" changes last name to "Mary Jones" <br />
           Endpoint: ("/users/MaryJones")
         </td>
       </tr>
