@@ -18,7 +18,7 @@ const movies = [
   {
     Title: "Scarface",
     Description: "A riveting drama about the rise and fall of a notorius drug dealer.",
-    Genre: "Suspense",
+    Genre: "Drama",
     Director: {
       Name: "Brian De Palma",
       Bio: "Brian Russell De Palma is an American film director and screenwriter. With a career spanning over 50 years, he is best known for work in the suspense, crime and psychological thriller genres.",
