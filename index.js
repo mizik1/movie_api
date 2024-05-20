@@ -18,7 +18,7 @@ const movies = [
   {
     Title: "Scarface",
     Description: "A riveting drama about the rise and fall of a notorius drug dealer.",
-    Genre: "Drama",
+    Genre: "Thriller",
     // GenreID:1
     Director: {
       Name: "Brian De Palma",
