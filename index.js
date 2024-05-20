@@ -130,8 +130,8 @@ const movies = [
       "Marty McFly, a 17-year-old high school student, is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his close friend, the maverick scientist Doc Brown.",
     Genre: "Comedy",
     Director: {
-      // GenreID:
-      Name: "JRobert Zemeckis",
+      // GenreID:5
+      Name: "Robert Zemeckis",
       Bio: "Robert Lee Zemeckis (born May 14, 1952) is an American filmmaker. He first came to public attention as the director of the action-adventure romantic comedy Romancing the Stone, the science-fiction comedy Back to the Future trilogy, and the live-action/animated comedy Who Framed Roger Rabbit.",
       BirthDate: "May 14, 1952",
       DeathDate: "NA",
@@ -143,6 +143,7 @@ const movies = [
     Description:
       "Two New Yorkers accused of murder in rural Alabama while on their way back to college call in the help of one of their cousins, a loudmouth lawyer with no trial experience.",
     Genre: "Comedy",
+    // GenreID:5
     Director: {
       Name: "Jonathan Lynn",
       Bio: "Jonathan Adam Lynn is an English stage and film director, producer, writer, and actor. He directed the comedy films Clue, Nuns on the Run, My Cousin Vinny, and The Whole Nine Yards. ",
