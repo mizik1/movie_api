@@ -81,7 +81,7 @@ const movies = [
     Title: "Star Wars Episode IV",
     Description:
       "Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.",
-    Genre: "Sci-fi",
+    Genre: "Science Fiction",
     // GenreID:3
     Director: {
       // DirectorID:5
