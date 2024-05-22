@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 
 let users = [];
 
+// added feature
 const movies = [
   {
     Title: "Scarface",
