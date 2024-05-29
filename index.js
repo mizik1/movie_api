@@ -5,6 +5,14 @@ const { deserialize } = require("v8");
 const bodyParser = require("body-parser");
 const uuid = require("uuid");
 
+const mongoose = require("mongoose");
+const Models = require("./models.js");
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true, useUnifiedTopology: true });
+
 const app = express();
 
 app.use(morgan("common"));
