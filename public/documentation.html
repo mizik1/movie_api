@@ -4,38 +4,209 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Documentation</title>
+    <link rel="stylesheet" href="/CSS/styles.css" />
+  </head>
+  <body>
+    <h1>Movie API Objective</h1>
+    <h2>Supported Requests</h2>
     <p>
       This is an API that provides users the ability to search for information about different movies, directors, and genres.
       Users will be able to sign up, update their personal information, and create a list of their favorite movies.
     </p>
-    <h1>Logic in Mongoose for returning a list of all movies to the user</h1>
 
-    <h2>
-      app.get(&quot;/movies&quot;, async (req, res) =&gt; { try { const movies = await Movies.find();
-      res.status(200).json(movies); } catch (error) { console.error(error); res.status(500).send(&quot;Error: &quot; + error); }
-      })
-    </h2>
-    <p>
-      This piece of code returns an endpoint in Express.js that handles GET requests <br />
-      1 - The endpoint is defined - app.get("./movies") <br />
-      2 - The callback function - uses 'async (req,res)' and allows 'await' to be used within it.
-    </p>
-    <ul>
-      <li>'req' - The request object has information about the HTTP request.</li>
-      <li>'res' - The response object is used to send a response back to the user</li>
-    </ul>
-    <p>3 - The 'try' is used in case there is an error . If an error occurs, it is passed to 'catch'</p>
-    <p>4 - Fetch movies from the database - 'const movies = await Movies.find()'';</p>
-    <ul>
-      <li>'await Movies.find()' - This line uses Mongoose to get all documents from the 'Movies' collection made in MongoDb</li>
-      <li>"await' pauses the execution of the function until the promise is returned by 'Movies.find()' is resolved.</li>
-      <li>'Movies.find()' - This Mongoose method retrieves all documents in the 'Movies' series.</li>
-    </ul>
-    <p>5 - Send the retrieved movies as a JSON response</p>
-    <ul>
-      <li>'res.status(200)' - The HTTP status code 200 indicates a success.</li>
-      <li>'.json(movies) - Sends the retrieved movies as a JSON response to the user</li>
-    </ul>
-  </head>
-  <body></body>
+    <table>
+      <thead>
+        <tr>
+          <th>Request</th>
+          <th>URL</th>
+          <th>HTTP Method</th>
+          <th>Request Body Data Format</th>
+          <th>Response Body Data Format</th>
+        </tr>
+        <tr>
+          <td>Return all movies</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>
+            A JSON object with data about the movie (Example): <br />
+            <br />'Title': 'Scarface' <br />'Description': '[Movie Description]'
+            <br />
+            'Genre': '[Genre name]' <br />
+            'Director': { <br />
+            'Name': 'Brian De Palma' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': 'image.png' <br />
+            'Featured': 'true'
+          </td>
+          <td>
+            A JSON object with data about the movie, including an ID: <br />
+            'Movieid': '1'
+            <br />'Title': 'Scarface' <br />'Description': '[Movie Description]'
+            <br />
+            'Genre': '[Genre name]' <br />
+            'Director': { <br />
+            'Name': 'Brian De Palma' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': 'image.png' <br />
+            'Featured': 'true'
+          </td>
+        </tr>
+        <tr>
+          <td>Return a movie that matches a certain genre</td>
+          <td>/movies/genre/Comedy</td>
+          <td>GET</td>
+          <td>
+            A JSON object with data about the movie (Example): <br />
+            <br />'Title': 'My Cousin Vinny' <br />'Description': '[Movie Description]'
+            <br />
+            'Genre': '[Genre name]' <br />
+            'Director': { <br />
+            'Name': 'Jonathon Adam Lynn' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': 'image.png' <br />
+            'Featured': 'false'
+          </td>
+          <td>
+            A JSON object with data about the movie, including an ID: <br />
+            'MovieID': '1'
+            <br />'Title': 'Scarface' <br />'Description': '[Movie Description]'
+            <br />
+            'Genre': '[Genre name]' <br />
+            'Director': { <br />
+            'Name': 'Jonathon Adam Lynn' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': 'image.png' <br />
+            'Featured': 'false'
+          </td>
+        </tr>
+        <tr>
+          <td>Return a movie that matches a title entered</td>
+          <td>/movies/title/My Cousin Vinny</td>
+          <td>GET</td>
+          <td>
+            A JSON object with data about the movie (Example): <br />
+            <br />'Title': 'My Cousin Vinny' <br />'Description': '[Movie Description]'
+            <br />
+            'Genre': '[Genre name]' <br />
+            'Director': { <br />
+            'Name': 'Jonathon Adam Lynn' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': 'image.png' <br />
+            'Featured': 'false'
+          </td>
+          <td>
+            A JSON object with data about the movie, including an ID: <br />
+            'MovieID': '10'
+            <br />'Title': 'My Cousin Vinny' <br />'Description': '[Movie Description]'
+            <br />
+            'Genre': '[Genre name]' <br />
+            'Director': { <br />
+            'Name': 'Jonathon Adam Lynn' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': 'image.png' <br />
+            'Featured': 'false'
+          </td>
+        </tr>
+        <tr>
+          <td>Return a movie that matches a director's name</td>
+          <td>/movies/director/George Lucas</td>
+          <td>GET</td>
+          <td>
+            A JSON object with data about the movie's director (Example): <br />
+            'Director': { <br />
+            'Name': '[Director Name]' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': image.png; <br />
+            'Featured': 'false'
+          </td>
+          <td>
+            A JSON object with data about the movie's director including bio, birth date, death date.<br />
+            'Director': { <br />
+            'Name': '[Director Name]' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': image.png; <br />
+            'Featured': 'false'
+          </td>
+        </tr>
+        <tr>
+          <td>Return information about a director</td>
+          <td>/movies/director/George Lucas</td>
+          <td>GET</td>
+          <td>
+            A JSON object with data about the movie's director (Example): <br />
+            'Director': { <br />
+            'Name': '[Director Name]' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': 'image.png' <br />
+            'Featured': 'false'
+          </td>
+          <td>
+            A JSON object with data about the movie's director including bio, birth date, death date.<br />
+            'Director': { <br />
+            'Name': '[Director Name]' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': 'image.png' <br />
+            'Featured': 'false'
+          </td>
+        </tr>
+        <tr>
+          <td>Return all users</td>
+          <td>/users</td>
+          <td>GET</td>
+          <td>
+            A JSON object with data about all users including userID, name, password, email, birthday, and favorite movie.
+            (Example):
+            <br />
+            'userid': '1' <br />
+            'Name': 'user1' { <br />
+            'password': 'password1' <br />
+            'email': 'user1@example.com' <br />
+            'BirthDate': 'Date' <br />
+            'movieid': '4'
+          </td>
+          <td>
+            A JSON object with data about the user.<br />
+            'Director': { <br />
+            'Name': '[Director Name]' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': 'image.png' <br />
+            'Featured': 'false'
+          </td>
+        </tr>
+      </thead>
+    </table>
+  </body>
 </html>

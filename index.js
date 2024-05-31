@@ -19,7 +19,7 @@ app.use(morgan("common"));
 app.use(express.static("public"));
 app.use(bodyParser.json());
 
-// Read (GET) - Return all movies
+// READ (GET) - Return all movies. Uses Mongoose.
 app.get("/movies", async (req, res) => {
   try {
     const movies = await Movies.find();
@@ -30,38 +30,51 @@ app.get("/movies", async (req, res) => {
   }
 });
 
-// READ (GET) - Return a specific movie by title
-app.get("/movies/title/:title", (req, res) => {
-  const { title } = req.params;
-  const movie = movies.find((movie) => movie.Title === title);
-
-  if (movie) {
-    res.status(200).json(movie);
-  } else {
-    res.status(400).send("No such movie");
+// READ (GET)- Return any movie that matches the genre entered (Comedy, Drama, Suspense, etc.). Uses Mongoose
+app.get("/movies/genre/:genre", async (req, res) => {
+  try {
+    const { genre } = req.params;
+    const movies = await Movies.find({ "Genre.Name": genre });
+    if (movies.length > 0) {
+      res.status(200).json(movies);
+    } else {
+      res.status(404).send("No such genre");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error: " + error);
   }
 });
 
-// READ (GET)- Return any movie that matches the genre entered (Comedy, Drama, Suspense, etc.)
-app.get("/movies/genre/:genre", (req, res) => {
-  const { genre } = req.params;
-  const movie = movies.filter((movie) => movie.Genre === genre);
-  if (movie) {
-    res.status(200).json(movie);
-  } else {
-    res.status(400).send("No such genre");
+// READ (GET) - Return a specific movie by title. Uses Mongoose
+app.get("/movies/title/:title", async (req, res) => {
+  try {
+    const { title } = req.params;
+    const movie = await Movies.findOne({ Title: title });
+    if (movie) {
+      res.status(200).json(movie);
+    } else {
+      res.status(404).send("No such movie");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error: " + error);
   }
 });
 
-// READ (GET)- Return the director's name
-app.get("/movies/director/:director", (req, res) => {
-  const { director } = req.params;
-  const movie = movies.find((movie) => movie.Director.Name === director);
-
-  if (movie) {
-    res.status(200).json(movie.Director);
-  } else {
-    res.status(400).send("No such director");
+// READ (GET) - Return the director's information. Uses Mongoose
+app.get("/movies/director/:director", async (req, res) => {
+  try {
+    const { director } = req.params;
+    const movie = await Movies.findOne({ "Director.Name": director });
+    if (movie) {
+      res.status(200).json(movie.Director);
+    } else {
+      res.status(404).send("No such director");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error: " + error);
   }
 });
 
@@ -296,6 +309,43 @@ app.listen(8080, () => {
 // READ (GET) - Return all movies
 // app.get("/movies", (req, res) => {
 //   res.status(200).json(movies);
+// });
+
+// EXPRESS JS Route Handlers
+
+// READ (GET)- Return any movie that matches the genre entered (Comedy, Drama, Suspense, etc.)
+// app.get("/movies/genre/:genre", (req, res) => {
+//   const { genre } = req.params;
+//   const movie = movies.filter((movie) => movie.Genre === genre);
+//   if (movie) {
+//     res.status(200).json(movie);
+//   } else {
+//     res.status(400).send("No such genre");
+//   }
+// });
+
+// READ (GET) - Return a specific movie by title
+// app.get("/movies/title/:title", (req, res) => {
+//   const { title } = req.params;
+//   const movie = movies.find((movie) => movie.Title === title);
+
+//   if (movie) {
+//     res.status(200).json(movie);
+//   } else {
+//     res.status(400).send("No such movie");
+//   }
+// });
+
+// READ (GET)- Return the director's information
+// app.get("/movies/director/:director", (req, res) => {
+//   const { director } = req.params;
+//   const movie = movies.find((movie) => movie.Director.Name === director);
+
+//   if (movie) {
+//     res.status(200).json(movie.Director);
+//   } else {
+//     res.status(400).send("No such director");
+//   }
 // });
 
 // READ (GET) - Return all users
