@@ -34,7 +34,7 @@ app.get("/movies", async (req, res) => {
 app.get("/movies/genre/:genre", async (req, res) => {
   try {
     const { genre } = req.params;
-    const movies = await Movies.find({ "Genre.Name": genre });
+    const movies = await Movies.find({ Genre: genre });
     if (movies.length > 0) {
       res.status(200).json(movies);
     } else {
