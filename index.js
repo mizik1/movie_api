@@ -3,7 +3,9 @@ const { title } = require("process");
 const morgan = require("morgan");
 const { deserialize } = require("v8");
 const bodyParser = require("body-parser");
-const uuid = require("uuid");
+
+const passport = require("passport");
+require("./passport");
 
 const mongoose = require("mongoose");
 const Models = require("./models.js");
@@ -18,6 +20,10 @@ const app = express();
 app.use(morgan("common"));
 app.use(express.static("public"));
 app.use(bodyParser.json());
+
+let auth = require("./auth")(app); // ensures that Express is available in 'auth.js' file
+const passport = require("passport"); // ensures that Express is available in 'passport.js' file
+require("./passport");
 
 // READ (GET) - Return all movies. Uses Mongoose.
 app.get("/movies", async (req, res) => {
@@ -105,15 +111,28 @@ app.get("/users/name/:name", async (req, res) => {
   }
 });
 
-// CREATE (POST)- Create a new user
-app.post("/users", (req, res) => {
-  const newUser = req.body;
-  if (newUser.name) {
-    newUser.id = uuid.v4();
-    users.push(newUser);
-    res.status(201).json(newUser);
-  } else {
-    res.status(400).send("users needs name");
+// CREATE (POST)- Create a new user. Uses Mongoose
+app.post("/users", async (req, res) => {
+  try {
+    const newUser = req.body;
+
+    if (!newUser.Username) {
+      return res.status(400).send("user needs a name");
+    }
+    // Creates and saves the user
+    const user = await Users.create({
+      username: newUser.Username,
+      Password: newUser.Password,
+      Email: newUser.Email,
+      BirthDate: newUser.BirthDate,
+      FavoriteMovie: newUser.FavoriteMovie,
+    });
+
+    // Handles errors
+    res.status(201).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error; " + error);
   }
 });
 
@@ -376,3 +395,5 @@ app.listen(8080, () => {
 // });
 
 // let users = [];
+
+// const uuid = require("uuid");
