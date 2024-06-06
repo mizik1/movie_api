@@ -22,11 +22,9 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 
 let auth = require("./auth")(app); // ensures that Express is available in 'auth.js' file
-const passport = require("passport"); // ensures that Express is available in 'passport.js' file
-require("./passport");
 
-// READ (GET) - Return all movies. Uses Mongoose.
-app.get("/movies", async (req, res) => {
+// READ (GET) - Return ALL movies. Uses Mongoose and Passport JWT authentication
+app.get("/movies", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const movies = await Movies.find();
     res.status(200).json(movies);
@@ -36,11 +34,11 @@ app.get("/movies", async (req, res) => {
   }
 });
 
-// READ (GET)- Return any movie that matches the genre entered (Comedy, Drama, Suspense, etc.). Uses Mongoose
-app.get("/movies/genre/:genre", async (req, res) => {
+// READ (GET)- Return movies matching movie genre entered. Uses Mongoose and JWT authentication
+app.get("/movies/genre/:genre", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const { genre } = req.params;
-    const movies = await Movies.find({ Genre: genre });
+    const movies = await Movies.find({ Genre });
     if (movies.length > 0) {
       res.status(200).json(movies);
     } else {
@@ -52,8 +50,8 @@ app.get("/movies/genre/:genre", async (req, res) => {
   }
 });
 
-// READ (GET) - Return a specific movie by title. Uses Mongoose
-app.get("/movies/title/:title", async (req, res) => {
+// READ (GET) - Return a specific movie by title. Uses Mongoose and JWT authentication
+app.get("/movies/title/:title", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const { title } = req.params;
     const movie = await Movies.findOne({ Title: title });
@@ -68,8 +66,8 @@ app.get("/movies/title/:title", async (req, res) => {
   }
 });
 
-// READ (GET) - Return the director's information. Uses Mongoose
-app.get("/movies/director/:director", async (req, res) => {
+// READ (GET) - Return the director's information. Uses Mongoose and JWT authentication
+app.get("/movies/director/:director", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const { director } = req.params;
     const movie = await Movies.findOne({ "Director.Name": director });
@@ -84,8 +82,8 @@ app.get("/movies/director/:director", async (req, res) => {
   }
 });
 
-// READ (Get) - all users. Uses Mongoose
-app.get("/users", async (req, res) => {
+// READ (Get) - all users. Uses Mongoose and JWT authentication
+app.get("/users", passport.authenticate("jwt", { session: false }), async (req, res) => {
   await Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -96,8 +94,8 @@ app.get("/users", async (req, res) => {
     });
 });
 
-// READ (GET) - Return a user by name. Uses Mongoose
-app.get("/users/name/:name", async (req, res) => {
+// READ (GET) - Return a user by name. Uses Mongoose and JWT authentication
+app.get("/users/name/:name", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const user = await Users.findOne({ name: req.params.name }); // Fetch user by name
     if (user) {
