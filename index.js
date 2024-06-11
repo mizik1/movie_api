@@ -155,10 +155,16 @@ app.post("/movies", (req, res) => {
   }
 });
 
-// Listen method, this starts a server listening for connection on port 8080
-app.listen(8080, () => {
-  console.log("Your app is running on port 8080.");
+// New port for using Heroku
+const port = process.env.PORT || 8080;
+app.listen(port, "0.0.0.0", () => {
+  console.log("Listening on Port " + port);
 });
+
+// Listen method, this starts a server listening for connection on port 8080
+// app.listen(8080, () => {
+//   console.log("Your app is running on port 8080.");
+// });
 
 // Old code
 
