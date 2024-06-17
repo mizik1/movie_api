@@ -13,7 +13,14 @@ const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true, useUnifiedTopology: true });
+// Connect with Mongoose
+// mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true, useUnifiedTopology: true });
+
+// Connect to MongoDBAtlas
+mongoose.connect("mongodb+srv://mattk:<MyDBAcode1>@testapps.sgrdw9r.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 
