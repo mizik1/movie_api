@@ -22,6 +22,8 @@ mongoose.connect("mongodb+srv://mattk:<Gr8database1!>@testapps.sgrdw9r.mongodb.n
   useUnifiedTopology: true,
 });
 
+app.listen(process.env.PORT, () => console.log("Example app listening at http://localhost:$(process.env.PORT)"));
+
 const app = express();
 
 app.use(morgan("common"));
