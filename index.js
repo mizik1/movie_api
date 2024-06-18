@@ -13,14 +13,38 @@ const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
 
-// Connect with Mongoose
-// mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true, useUnifiedTopology: true });
+// Connection_URI
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// Connect to MongoDBAtlas - Don't publish to GitHub
+mongoose.connect("mongodb+srv://mattk:<Gr8database1!>@testapps.sgrdw9r.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 
 app.use(morgan("common"));
 app.use(express.static("public"));
 app.use(bodyParser.json());
+
+// CORS
+const cors = require("./auth")(app);
+let allowedOrigins = ["http://localhost:8080", "http://testsite.com"];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        // If a specific origin isn’t found on the list of allowed origins
+        let message = "The CORS policy for this application doesn’t allow access from origin " + origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
 
 let auth = require("./auth")(app); // ensures that Express is available in 'auth.js' file
 
@@ -161,6 +185,9 @@ const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);
 });
+
+// Initial Mongoose connection
+// mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Listen method, this starts a server listening for connection on port 8080
 // app.listen(8080, () => {
