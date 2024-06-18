@@ -16,7 +16,7 @@ const Users = Models.User;
 // Connection_URI
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Connect to MongoDBAtlas - Don't publish to GitHub
+// Connects to MongoDBAtlas - Don't publish to GitHub
 mongoose.connect("mongodb+srv://mattk:<Gr8database1!>@testapps.sgrdw9r.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
