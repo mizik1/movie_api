@@ -23,7 +23,7 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 
 // CORS
-const cors = require("./auth")(app);
+const cors = require("cors");
 let allowedOrigins = ["http://localhost:8080", "http://testsite.com"];
 
 app.use(
