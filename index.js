@@ -138,7 +138,7 @@ app.post("/users", async (req, res) => {
     }
     // Creates and saves the user
     const user = await Users.create({
-      username: newUser.Username,
+      Username: newUser.Username,
       Password: newUser.Password,
       Email: newUser.Email,
       BirthDate: newUser.BirthDate,
