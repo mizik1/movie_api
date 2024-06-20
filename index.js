@@ -16,14 +16,6 @@ const Users = Models.User;
 // Connection_URI
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Connects to MongoDBAtlas - Don't publish to GitHub
-mongoose.connect("mongodb+srv://mattk:<Gr8database1!>@testapps.sgrdw9r.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-app.listen(process.env.PORT, () => console.log("Example app listening at http://localhost:$(process.env.PORT)"));
-
 const app = express();
 
 app.use(morgan("common"));
