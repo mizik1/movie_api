@@ -33,6 +33,19 @@ userSchema.methods.validatePassword = function (password) {
   return bcrypt.compareSync(password, this.Password);
 };
 
+// Pre-save middleware to hash password
+userSchema.pre("save", function (next) {
+  let user = this;
+
+  if (!user.isModified("Password")) return next();
+
+  bcrypt.hash(user.Password, 10, (err, hash) => {
+    if (err) return next(err);
+    user.Password = hash;
+    next();
+  });
+});
+
 let Movie = mongoose.model("Movie", movieSchema);
 let User = mongoose.model("User", userSchema);
 

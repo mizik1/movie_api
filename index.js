@@ -128,14 +128,16 @@ app.get("/users/name/:name", passport.authenticate("jwt", { session: false }), a
   }
 });
 
-// CREATE (POST)- Create a new user. Uses Mongoose
+// CREATE (POST)- Create a new user. Uses Mongoose and JWT
 app.post("/users", async (req, res) => {
   try {
     const newUser = req.body;
 
-    if (!newUser.Username) {
-      return res.status(400).send("user needs a name");
+    if (!newUser.Username || !newUser.Password || !newUser.Email) {
+      return res.status(400).send("Missing required user details");
     }
+
+    const hashedPassword = User.hashPassword(newUser.Password);
     // Creates and saves the user
     const user = await Users.create({
       Username: newUser.Username,
