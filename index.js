@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const { title } = require("process");
 const morgan = require("morgan");
@@ -13,7 +14,7 @@ const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
 
-// Connection_URI
+// Heroku Connection_URI
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
@@ -176,7 +177,7 @@ app.post("/movies", (req, res) => {
   }
 });
 
-// New port for using Heroku
+// Non hardcoded port for using Heroku.
 const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);
