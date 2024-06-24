@@ -137,7 +137,7 @@ app.post("/users", async (req, res) => {
       return res.status(400).send("Missing required user details");
     }
 
-    const hashedPassword = User.hashPassword(newUser.Password);
+    const hashedPassword = Users.hashPassword(newUser.Password); //Use Users
     // Creates and saves the user
     const user = await Users.create({
       Username: newUser.Username,
