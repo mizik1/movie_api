@@ -58,14 +58,16 @@ app.get("/movies", passport.authenticate("jwt", { session: false }), async (req,
 app.get("/movies/genre/:genre", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const { genre } = req.params;
-    const movies = await Movies.find({ "Genre.Name": genre }); // Adjust the query
+    console.log(`Querying for genre: ${genre}`); // Log the genre being queried
+    const movies = await Movies.find({ Genre: genre });
+    console.log(`Movies found: ${movies.length}`); // Log the number of movies found
     if (movies.length > 0) {
       res.status(200).json(movies);
     } else {
       res.status(404).send("No such genre");
     }
   } catch (error) {
-    console.error(error);
+    console.error("Error querying movies by genre:", error);
     res.status(500).send("Error: " + error);
   }
 });
