@@ -58,7 +58,7 @@ app.get("/movies", passport.authenticate("jwt", { session: false }), async (req,
 app.get("/movies/genre/:genre", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const { genre } = req.params;
-    const movies = await Movies.find({ Genre });
+    const movies = await Movies.find({ "Genre.Name": genre }); // Adjust the query
     if (movies.length > 0) {
       res.status(200).json(movies);
     } else {
