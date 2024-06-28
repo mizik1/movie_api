@@ -59,10 +59,10 @@ app.get("/movies/genre/:genre", passport.authenticate("jwt", { session: false })
   try {
     const { genre } = req.params;
     console.log(`Querying for genre: ${genre}`); // Log the genre being queried
-    const movies = await Movies.find({ Genre: genre });
+    const movies = await Movies.findOne({ Genre: genre });
     console.log(`Movies found: ${movies.length}`); // Log the number of movies found
     if (movies.length > 0) {
-      res.status(200).json(movies);
+      res.status(200).json(movies.Genre);
     } else {
       res.status(404).send("No such genre");
     }
@@ -150,7 +150,7 @@ app.post("/users", async (req, res) => {
       FavoriteMovie: newUser.FavoriteMovie,
     });
 
-    // CREATE (POST) - Add a movie as a user's favorite
+    // CREATE (POST) - Adding a movie to a user's favorite
     app.post("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { session: false }), async (req, res) => {
       try {
         const { userId, movieId } = req.params;
@@ -167,7 +167,7 @@ app.post("/users", async (req, res) => {
           return res.status(404).send("Movie not found");
         }
 
-        // Add movie to user's favorites if not already added
+        // Add movie to user's favorites if its not already added
         if (!user.FavoriteMovies.includes(movieId)) {
           user.FavoriteMovies.push(movieId);
           await user.save();
@@ -188,8 +188,30 @@ app.post("/users", async (req, res) => {
   }
 });
 
-// CREATE (POST) - Add a new movie
-app.post("/movies", (req, res) => {
+// DELETE (DELETE) - Remove a movie from user's favorite
+app.delete("users/:userID/favorites/:movieID", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const { userId, movieId } = req.params;
+
+    // find the user by ID
+    const user = await Users.findById(userId);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Check if the movie is in the user's favorites
+    user.FavoriteMovies.splice(favoriteIndex, 1);
+    await user.save();
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error removing favorite movie;", error);
+    res.status(500).send("Error: " + error);
+  }
+});
+
+// CREATE (POST) - Adds a new movie with JWT authentication
+app.post("/movies", passport.authenticate("jwt", { session: false }), async (req, res) => {
   const newMovie = req.body;
 
   if (
@@ -202,12 +224,34 @@ app.post("/movies", (req, res) => {
     newMovie.Director.BirthDate &&
     newMovie.imageURL
   ) {
-    movies.push(newMovie);
-    res.status(201).json(newMovie);
+    try {
+      // Add a new movie using the Movie model
+      const movie = new Movie({
+        Title: newMovie.Title,
+        Description: newMovie.Description,
+        Genre: newMovie.Genre,
+        Director: {
+          Name: newMovie.Director.Name,
+          Bio: newMovie.Director.Bio,
+          BirthDate: newMovie.Director.BirthDate,
+        },
+        ImagePath: newMovie.imageURL,
+        Featured: newMovie.Featured || false,
+      });
+
+      // Save the movie to the database
+      await movie.save();
+      res.status(201).json(movie);
+    } catch (error) {
+      console.error("Error creating movie:", error);
+      res.status(500).send("Error: " + error);
+    }
   } else {
     res.status(400).send("Missing required movie details");
   }
 });
+
+// DELETE
 
 // Non hardcoded port for using Heroku.
 const port = process.env.PORT || 8080;
