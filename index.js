@@ -59,7 +59,7 @@ app.get("/movies/genre/:genre", passport.authenticate("jwt", { session: false })
   try {
     const { genre } = req.params;
     console.log(`Querying for genre: ${genre}`); // Log the genre being queried
-    const movies = await Movies.find({ Genre: genre });
+    const movies = await Movies.find({ Genre: { $regex: new RegExp(genre, "i") } });
     console.log(`Movies found: ${movies.length}`); // Log the number of movies found
     if (movies.length > 0) {
       res.status(200).json(movies); // Return the array of movies
@@ -140,72 +140,76 @@ app.post("/users", async (req, res) => {
       return res.status(400).send("Missing required user details");
     }
 
-    const hashedPassword = Users.hashPassword(newUser.Password); //Use Users
+    const hashedPassword = await Users.hashPassword(newUser.Password); // Use Users
     // Creates and saves the user
     const user = await Users.create({
       Username: newUser.Username,
-      Password: newUser.Password,
+      Password: hashedPassword,
       Email: newUser.Email,
       BirthDate: newUser.BirthDate,
-      FavoriteMovie: newUser.FavoriteMovie,
+      FavoriteMovies: newUser.FavoriteMovies,
     });
 
-    // CREATE (POST) - Adding a movie to a user's favorite
-    app.post("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { session: false }), async (req, res) => {
-      try {
-        const { userId, movieId } = req.params;
-
-        // Find the user by ID
-        const user = await Users.findById(userId);
-        if (!user) {
-          return res.status(404).send("User not found");
-        }
-
-        // Check if the movie exists
-        const movie = await Movies.findById(movieId);
-        if (!movie) {
-          return res.status(404).send("Movie not found");
-        }
-
-        // Add movie to user's favorites if its not already added
-        if (!user.FavoriteMovies.includes(movieId)) {
-          user.FavoriteMovies.push(movieId);
-          await user.save();
-          return res.status(200).json(user);
-        } else {
-          return res.status(400).send("Movie already in favorites");
-        }
-      } catch (error) {
-        console.error("Error adding favorite movie:", error);
-        res.status(500).send("Error: " + error);
-      }
-    });
-    // Handles errors
     res.status(201).json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error; " + error);
+    res.status(500).send("Error: " + error);
+  }
+});
+
+// CREATE (POST) - Adding a movie to a user's favorite
+app.post("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const { userId, movieId } = req.params;
+
+    // Find the user by ID
+    const user = await Users.findById(userId);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Check if the movie exists
+    const movie = await Movies.findById(movieId);
+    if (!movie) {
+      return res.status(404).send("Movie not found");
+    }
+
+    // Add movie to user's favorites if it's not already added
+    if (!user.FavoriteMovies.includes(movieId)) {
+      user.FavoriteMovies.push(movieId);
+      await user.save();
+      return res.status(200).json(user);
+    } else {
+      return res.status(400).send("Movie already in favorites");
+    }
+  } catch (error) {
+    console.error("Error adding favorite movie:", error);
+    res.status(500).send("Error: " + error);
   }
 });
 
 // DELETE (DELETE) - Remove a movie from user's favorite
-app.delete("users/:userID/favorites/:movieID", passport.authenticate("jwt", { session: false }), async (req, res) => {
+app.delete("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const { userId, movieId } = req.params;
 
-    // find the user by ID
+    // Find the user by ID
     const user = await Users.findById(userId);
     if (!user) {
       return res.status(404).send("User not found");
     }
 
     // Check if the movie is in the user's favorites
-    user.FavoriteMovies.splice(favoriteIndex, 1);
-    await user.save();
-
-    res.status(200).json(user);
+    const favoriteIndex = user.FavoriteMovies.indexOf(movieId);
+    if (favoriteIndex > -1) {
+      user.FavoriteMovies.splice(favoriteIndex, 1);
+      await user.save();
+      res.status(200).json(user);
+    } else {
+      res.status(404).send("Movie not found in favorites");
+    }
   } catch (error) {
-    console.error("Error removing favorite movie;", error);
+    console.error("Error removing favorite movie:", error);
     res.status(500).send("Error: " + error);
   }
 });
@@ -226,7 +230,7 @@ app.post("/movies", passport.authenticate("jwt", { session: false }), async (req
   ) {
     try {
       // Add a new movie using the Movie model
-      const movie = new Movie({
+      const movie = new Movies({
         Title: newMovie.Title,
         Description: newMovie.Description,
         Genre: newMovie.Genre,
@@ -250,8 +254,6 @@ app.post("/movies", passport.authenticate("jwt", { session: false }), async (req
     res.status(400).send("Missing required movie details");
   }
 });
-
-// DELETE
 
 // Non hardcoded port for using Heroku.
 const port = process.env.PORT || 8080;
