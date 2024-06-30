@@ -59,10 +59,10 @@ app.get("/movies/genre/:genre", passport.authenticate("jwt", { session: false })
   try {
     const { genre } = req.params;
     console.log(`Querying for genre: ${genre}`); // Log the genre being queried
-    const movies = await Movies.findOne({ Genre: genre });
+    const movies = await Movies.find({ Genre: genre });
     console.log(`Movies found: ${movies.length}`); // Log the number of movies found
     if (movies.length > 0) {
-      res.status(200).json(movies.Genre);
+      res.status(200).json(movies); // Return the array of movies
     } else {
       res.status(404).send("No such genre");
     }
