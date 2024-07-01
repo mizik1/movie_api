@@ -119,7 +119,7 @@ app.get("/users", passport.authenticate("jwt", { session: false }), async (req, 
 // READ (GET) - Return a user by name. Uses Mongoose and JWT authentication
 app.get("/users/name/:name", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
-    const user = await Users.findOne({ name: req.params.name }); // Fetch user by name
+    const user = await Users.findOne({ Username: req.params.name }); // Fetch user by name
     if (user) {
       res.status(200).json(user); // Send the user as a JSON response
     } else {

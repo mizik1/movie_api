@@ -176,6 +176,33 @@
             'Featured': 'false'
           </td>
         </tr>
+        <tr>
+          <td>Return all users</td>
+          <td>/users</td>
+          <td>GET</td>
+          <td>
+            A JSON object with data about all users including userID, name, password, email, birthday, and favorite movie
+            (movieid). Example:
+            <br />
+            'userid': '1' <br />
+            'Name': 'user1' { <br />
+            'password': 'password1' <br />
+            'email': 'user1@example.com' <br />
+            'BirthDate': 'Date' <br />
+            'movieid': '4'
+          </td>
+          <td>
+            A JSON object with data about the user.<br />
+            'Director': { <br />
+            'Name': '[Director Name]' <br />
+            'Bio': '[Director Bio]' <br />
+            'BirthDate': 'Date' <br />
+            'DeathDate': 'Date' <br />
+            }, <br />
+            'ImageURL': 'image.png' <br />
+            'Featured': 'false'
+          </td>
+        </tr>
       </thead>
     </table>
   </body>
