@@ -188,6 +188,47 @@ app.post("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { ses
   }
 });
 
+// CREATE (POST) - Adds a new movie with JWT authentication
+app.post("/movies", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  const newMovie = req.body;
+
+  if (
+    newMovie.Title &&
+    newMovie.Description &&
+    newMovie.Genre &&
+    newMovie.Director &&
+    newMovie.Director.Name &&
+    newMovie.Director.Bio &&
+    newMovie.Director.BirthDate &&
+    newMovie.imageURL
+  ) {
+    try {
+      // Adds a new movie using the Movie model
+      const movie = new Movies({
+        Title: newMovie.Title,
+        Description: newMovie.Description,
+        Genre: newMovie.Genre,
+        Director: {
+          Name: newMovie.Director.Name,
+          Bio: newMovie.Director.Bio,
+          BirthDate: newMovie.Director.BirthDate,
+        },
+        ImagePath: newMovie.imageURL,
+        Featured: newMovie.Featured || false,
+      });
+
+      // Saves the movie to the database
+      await movie.save();
+      res.status(201).json(movie);
+    } catch (error) {
+      console.error("Error creating movie:", error);
+      res.status(500).send("Error: " + error);
+    }
+  } else {
+    res.status(400).send("Missing required movie details");
+  }
+});
+
 // DELETE (DELETE) - Remove a movie from user's favorite. Uses Mongoose and JWT authentication
 app.delete("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
@@ -214,44 +255,23 @@ app.delete("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { s
   }
 });
 
-// CREATE (POST) - Adds a new movie with JWT authentication
-app.post("/movies", passport.authenticate("jwt", { session: false }), async (req, res) => {
-  const newMovie = req.body;
+// DELETE - Delete a user. Uses Mongoose and JWT authentication
+app.delete("/users/:userId", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  try {
+    const { userId } = req.params;
 
-  if (
-    newMovie.Title &&
-    newMovie.Description &&
-    newMovie.Genre &&
-    newMovie.Director &&
-    newMovie.Director.Name &&
-    newMovie.Director.Bio &&
-    newMovie.Director.BirthDate &&
-    newMovie.imageURL
-  ) {
-    try {
-      // Add a new movie using the Movie model
-      const movie = new Movies({
-        Title: newMovie.Title,
-        Description: newMovie.Description,
-        Genre: newMovie.Genre,
-        Director: {
-          Name: newMovie.Director.Name,
-          Bio: newMovie.Director.Bio,
-          BirthDate: newMovie.Director.BirthDate,
-        },
-        ImagePath: newMovie.imageURL,
-        Featured: newMovie.Featured || false,
-      });
-
-      // Save the movie to the database
-      await movie.save();
-      res.status(201).json(movie);
-    } catch (error) {
-      console.error("Error creating movie:", error);
-      res.status(500).send("Error: " + error);
+    // Find the user by ID
+    const user = await Users.findById(userId);
+    if (!user) {
+      return res.status(404).send("User not found");
     }
-  } else {
-    res.status(400).send("Missing required movie details");
+
+    // Delete the user
+    await Users.findByIdAndDelete(userId);
+    res.status(200).send("User with ID {$userID} has been deleted.");
+  } catch (error) {
+    console.error("Error removing user:", error);
+    res.status(500).send("Error: " + error);
   }
 });
 
