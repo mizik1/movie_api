@@ -131,7 +131,7 @@ app.get("/users/name/:name", passport.authenticate("jwt", { session: false }), a
   }
 });
 
-// CREATE (POST)- Create a new user. Uses Mongoose and JWT
+// CREATE (POST)- Create a new user. Uses Mongoose and JWT authentication
 app.post("/users", async (req, res) => {
   try {
     const newUser = req.body;
@@ -157,7 +157,7 @@ app.post("/users", async (req, res) => {
   }
 });
 
-// CREATE (POST) - Adding a movie to a user's favorite
+// CREATE (POST) - Adding a movie to a user's favorite. Uses Mongoose and JWT authentication
 app.post("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const { userId, movieId } = req.params;
@@ -188,7 +188,7 @@ app.post("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { ses
   }
 });
 
-// DELETE (DELETE) - Remove a movie from user's favorite
+// DELETE (DELETE) - Remove a movie from user's favorite. Uses Mongoose and JWT authentication
 app.delete("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const { userId, movieId } = req.params;
