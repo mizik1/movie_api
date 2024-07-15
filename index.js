@@ -44,7 +44,7 @@ app.use(
 let auth = require("./auth")(app); // ensures that Express is available in 'auth.js' file
 
 // READ (GET) - Return ALL movies. Uses Mongoose and Passport JWT authentication
-app.get("/movies", async (req, res) => {
+app.get("/movies", passport.authenticate("jwt", { session: false }), async (req, res) => {
   try {
     const movies = await Movies.find();
     res.status(200).json(movies);
