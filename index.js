@@ -25,7 +25,9 @@ app.use(bodyParser.json());
 
 // CORS
 const cors = require("cors");
-let allowedOrigins = ["http://localhost:8080", "http://testsite.com"];
+
+// These websites are allowed and bypass CORS
+let allowedOrigins = ["http://localhost:3000", "http://localhost:8080", "http://testsite.com"];
 
 app.use(
   cors({
