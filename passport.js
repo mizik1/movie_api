@@ -14,15 +14,25 @@ passport.use(
       usernameField: "Username",
       passwordField: "Password",
     },
-    (username, password, callback) => {
-      Users.findOne({ Username: username })
+    async (username, password, callback) => {
+      console.log("${username} ${password}");
+      await Users.findOne({ Username: username })
         .then((user) => {
           if (!user) {
-            return callback(null, false, { message: "Incorrect username or password." });
+            console.log("incorrect username");
+            return callback(null, false, {
+              message: "Incorrect username or password.",
+            });
           }
+          console.log("finished");
           return callback(null, user);
         })
-        .catch((error) => callback(error));
+        .catch((error) => {
+          if (error) {
+            console.log(error);
+            return callback(error);
+          }
+        });
     }
   )
 );
@@ -32,10 +42,10 @@ passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.JWT_SECRET,
+      secretOrKey: "your_jwt_secret",
     },
-    (jwtPayload, callback) => {
-      return Users.findById(jwtPayload._id)
+    async (jwtPayload, callback) => {
+      return await Users.findById(jwtPayload._id)
         .then((user) => {
           return callback(null, user);
         })
