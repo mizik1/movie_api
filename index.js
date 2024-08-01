@@ -48,28 +48,6 @@ let auth = require("./auth")(app); // ensures that Express is available in 'auth
 // JWT middleware authentication
 const requireAuth = passport.authenticate("jwt", { session: false });
 
-// LOGIN endpoint
-app.post("./login", async (req, res) => {
-  const { Username, Password } = req.body;
-
-  const user = await Users.findOne({ Username }).exec();
-
-  if (!user) {
-    return res.status(400).json({ message: "Incorrect username or password" });
-  }
-});
-
-// compare the password with the stored hashed password
-const isMatch = await bcrypt.compare(Password, user.Password);
-
-if (!isMatch) {
-  return res.status(400).json({ message: "Incorrect username or password" });
-}
-
-// create and sign the JWT token
-const payload = { _id: user._id, Username: user.Username };
-const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" });
-
 // READ (GET) - Return ALL movies. Uses Mongoose and Passport JWT authentication
 app.get("/movies", requireAuth, async (req, res) => {
   try {
