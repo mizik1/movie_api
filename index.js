@@ -200,42 +200,34 @@ app.post("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { ses
 
 // CREATE (POST) - Adds a new movie with JWT authentication
 app.post("/movies", passport.authenticate("jwt", { session: false }), async (req, res) => {
-  const newMovie = req.body;
+  const { Title, Description, Genre, Director, imageURL, Featured } = req.body;
 
-  if (
-    newMovie.Title &&
-    newMovie.Description &&
-    newMovie.Genre &&
-    newMovie.Director &&
-    newMovie.Director.Name &&
-    newMovie.Director.Bio &&
-    newMovie.Director.BirthDate &&
-    newMovie.imageURL
-  ) {
-    try {
-      // Adds a new movie using the Movie model
-      const movie = new Movies({
-        Title: newMovie.Title,
-        Description: newMovie.Description,
-        Genre: newMovie.Genre,
-        Director: {
-          Name: newMovie.Director.Name,
-          Bio: newMovie.Director.Bio,
-          BirthDate: newMovie.Director.BirthDate,
-        },
-        ImagePath: newMovie.imageURL,
-        Featured: newMovie.Featured || false,
-      });
+  // Validate required fields
+  if (!Title || !Description || !Genre || !Director || !Director.Name || !Director.Bio || !imageURL) {
+    return res.status(400).send("Missing required movie details");
+  }
 
-      // Saves the movie to the database
-      await movie.save();
-      res.status(201).json(movie);
-    } catch (error) {
-      console.error("Error creating movie:", error);
-      res.status(500).send("Error: " + error);
-    }
-  } else {
-    res.status(400).send("Missing required movie details");
+  try {
+    // Create new movie object
+    const movie = new Movies({
+      Title,
+      Description,
+      Genre,
+      Director: {
+        Name: Director.Name,
+        Bio: Director.Bio,
+        BirthDate: Director.BirthDate || null, // Allow optional BirthDate
+      },
+      ImagePath: imageURL,
+      Featured: Featured || false, // Default to false if not provided
+    });
+
+    // Save the movie to the database
+    const savedMovie = await movie.save();
+    res.status(201).json(savedMovie);
+  } catch (error) {
+    console.error("Error creating movie:", error);
+    res.status(500).send("Error: " + error);
   }
 });
 
