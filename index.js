@@ -27,7 +27,12 @@ app.use(bodyParser.json());
 const cors = require("cors");
 
 // These websites are allowed and bypass CORS
-let allowedOrigins = ["http://localhost:3000", "http://localhost:8080", "http://testsite.com"];
+let allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:8080",
+  "http://testsite.com",
+  "https:mycoolflixreactapp.netlify.app",
+];
 
 app.use(
   cors({
