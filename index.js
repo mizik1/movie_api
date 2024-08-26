@@ -31,7 +31,7 @@ let allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:8080",
   "http://testsite.com",
-  "https://mycoolflixreactapp.netlify.app/",
+  "https://mycoolflixreactapp.netlify.app",
 ];
 
 app.use(
