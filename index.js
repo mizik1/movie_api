@@ -218,7 +218,7 @@ app.post("/movies", passport.authenticate("jwt", { session: false }), async (req
         Bio: Director.Bio,
         BirthDate: Director.BirthDate || null, // Allow optional BirthDate
       },
-      imageURL, // Store the image URL in the correct field
+      imageURL, // Ensure the correct field name is used here
       Featured: Featured || false, // Default to false if not provided
     });
 
