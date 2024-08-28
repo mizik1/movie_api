@@ -245,9 +245,9 @@ app.delete("/users/:userId/favorites/:movieId", passport.authenticate("jwt", { s
     // Check if the movie is in the user's favorites
     const favoriteIndex = user.FavoriteMovies.indexOf(movieId);
     if (favoriteIndex > -1) {
-      user.FavoriteMovies.splice(favoriteIndex, 1);
-      await user.save();
-      res.status(200).json(user);
+      user.FavoriteMovies.splice(favoriteIndex, 1); // Remove the movie from favorites
+      await user.save(); // Save the updated user document
+      res.status(200).json(user); // Return the updated user document
     } else {
       res.status(404).send("Movie not found in favorites");
     }
