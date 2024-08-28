@@ -208,7 +208,7 @@ app.post("/movies", passport.authenticate("jwt", { session: false }), async (req
   }
 
   try {
-    // Create new movie object
+    // Create new movie object with 'imageURL' field instead of 'ImagePath'
     const movie = new Movies({
       Title,
       Description,
@@ -218,7 +218,7 @@ app.post("/movies", passport.authenticate("jwt", { session: false }), async (req
         Bio: Director.Bio,
         BirthDate: Director.BirthDate || null, // Allow optional BirthDate
       },
-      ImagePath: imageURL,
+      imageURL, // Store the image URL in the correct field
       Featured: Featured || false, // Default to false if not provided
     });
 
